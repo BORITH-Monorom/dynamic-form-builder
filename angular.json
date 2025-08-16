@@ -27,7 +27,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles.css"
             ]
           },
           "configurations": {
@@ -81,11 +82,15 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles.css"
             ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "42b22925-9aeb-4342-a9ce-d63186c1ad41"
   }
 }
