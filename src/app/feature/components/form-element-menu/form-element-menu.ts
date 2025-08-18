@@ -8,9 +8,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   imports: [FieldButton ,DragDropModule],
   // templateUrl: './form-element-menu.html',
   template:`
-  <div class="content">
+  <div class="content h-[calc(100vh-150px)] overflow-y-auto">
     <h3 class="content__title">Form Elements</h3>
-    <div class="flex flex-col gap-4 element-menu" 
+    <div class="flex flex-col gap-4 element-menu"
     cdkDropList
     cdkDropListSortingDisabled="true"
     [cdkDropListData]="'field-selector'"
