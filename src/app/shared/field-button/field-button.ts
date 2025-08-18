@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import { FieldTypeDefinition } from '../../feature/models/field';
 import {DragDropModule} from '@angular/cdk/drag-drop'
@@ -10,16 +10,29 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     <button 
     cdkDrag
     [cdkDragData]="field()"
+    (cdkDragStarted)="whileDragging.set(true)"
+    (cdkDragEnded)="whileDragging.set(false)"
     class="button">
     <div class="button__icon">
-      <mat-icon>{{field().icon}}</mat-icon>
+      <mat-icon class="scale-75">{{field().icon}}</mat-icon>
     </div>
     <span class="button__label">{{field().label}}</span>
     <div *cdkDragPlaceholder></div>
     </button>
+    @if(whileDragging()){
+    <div 
+    class="button">
+    <div class="button__icon">
+      <mat-icon class="scale-75">{{field().icon}}</mat-icon>
+    </div>
+    <span class="button__label">{{field().label}}</span>
+    <div *cdkDragPlaceholder></div>
+    </div>
+    }
   `,
   styleUrl: './field-button.scss'
 })
 export class FieldButton {
   field = input.required<FieldTypeDefinition>();
+  whileDragging = signal(false)
 }

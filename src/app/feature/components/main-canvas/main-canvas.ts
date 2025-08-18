@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormEditor } from './form-editor/form-editor';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { FormPreview } from "./form-preview/form-preview";
@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common'; // Import CommonModule for directives like @if
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-main-canvas',
@@ -99,9 +100,9 @@ import { CommonModule } from '@angular/common'; // Import CommonModule for direc
 export class MainCanvas {
   // field = input.required<FormField>();
   activeTab = signal<'editor' | 'preview'>('editor');
-
+  formService = inject(FormService)
   // Method to be called when the button is clicked (you can add your logic here)
   addRow() {
-    console.log('Add Row clicked!');
+  this.formService.addRow()
   }
 }
