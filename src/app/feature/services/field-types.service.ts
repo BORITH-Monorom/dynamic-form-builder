@@ -3,6 +3,7 @@ import { FieldTypeDefinition } from '../models/field';
 import { TextField } from '../../shared/field-types/text-field/text-field';
 import { CheckboxField } from '../../shared/field-types/checkbox-field/checkbox-field';
 import { SelectField } from '../../shared/field-types/select-field/select-field';
+import { DateField } from '../../shared/field-types/date-field/date-field';
 const TEXT_FIELD_DEFINATION: FieldTypeDefinition = {
   type: 'text',
   label: 'Text field',
@@ -52,7 +53,7 @@ const TEXT_FIELD_DEFINATION: FieldTypeDefinition = {
       />
     </mat-form-field>
     `
-  
+
 };
 const CHECKBOX_FIELD_DEFINITION: FieldTypeDefinition = {
   type: 'checkbox',
@@ -80,7 +81,7 @@ const SELECTED_FIELD_DEFINITION: FieldTypeDefinition ={
             {value: 'option1', label: "Option 1"},
             {value: 'option2', label: "Option 2"},
             {value: 'option3', label: "Option 3"},
-        ] 
+        ]
     },
     settingsConfig:[
         {type: 'text', key: 'label', label:'Label'},
@@ -90,11 +91,11 @@ const SELECTED_FIELD_DEFINITION: FieldTypeDefinition ={
     component: SelectField,
     generateCode: (field) => {
 
-      let code = 
-      `<mat-form-field appearance="outline" class="w-full">\n` +  
+      let code =
+      `<mat-form-field appearance="outline" class="w-full">\n` +
       `<mat-label>${field.label}</mat-label>\n` +
       `<mat-select [required]="${field.required}">\n`
-      
+
       if(field.options){
         field.options.forEach(option => {
           code += `<mat-option [value]="${option.value}">${option.label}</mat-option>\n`;
@@ -109,6 +110,43 @@ const SELECTED_FIELD_DEFINITION: FieldTypeDefinition ={
       return code;
     }
 }
+
+const DATE_FIELD_DEFINITION: FieldTypeDefinition = {
+  type: 'date',
+  label: 'Date Picker',
+  icon: 'date_range',
+  defaultConfig:{
+    label: 'Choose a date',
+    required: false,
+  },
+  settingsConfig: [
+    {
+      type: 'text',
+      key: 'label',
+      label: 'Label'
+    },
+    {
+      type: 'checkbox',
+      key: 'required',
+      label: 'Required'
+    }
+
+  ],
+  component: DateField,
+  generateCode: (field) => `
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>${field.label}</mat-label>
+      <input
+        matInput
+        [type]="'date'"
+        [required]="${field.required}"
+      />
+    </mat-form-field>
+    `
+
+
+
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -116,7 +154,8 @@ export class FieldTypesService {
   fieldTypes = new Map<string, FieldTypeDefinition>([
     ['text', TEXT_FIELD_DEFINATION],
     ['checkbox', CHECKBOX_FIELD_DEFINITION],
-    ['select', SELECTED_FIELD_DEFINITION]
+    ['select', SELECTED_FIELD_DEFINITION],
+    ['date', DATE_FIELD_DEFINITION]
   ]);
   getFieldType(type: string): FieldTypeDefinition | undefined {
     return this.fieldTypes.get(type);

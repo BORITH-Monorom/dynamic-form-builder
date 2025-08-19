@@ -1,7 +1,8 @@
-import { computed, effect, inject, Injectable, signal } from '@angular/core';
+import { ApplicationRef, computed, effect, inject, Injectable, signal } from '@angular/core';
 import { FormRow } from '../models/form';
 import { FormField } from '../models/field';
 import { FieldTypesService } from './field-types.service';
+import { startViewTransition } from '../utils/view-transition';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ export class FormService {
   private _rows = signal<FormRow[]>([]);
   private _selectedFieldId = signal<string | null>(null);
   public readonly rows = this._rows.asReadonly();
-
+  private appRef = inject(ApplicationRef)
   public readonly selectedField = computed(() =>
     this._rows()
       .flatMap((row) => row.fields)
@@ -48,8 +49,9 @@ export class FormService {
 
       return row;
     });
-
-    this._rows.set(newRows);
+    startViewTransition(() =>{
+      this._rows.set(newRows);
+    })
   }
 
   deleteField(fieldId: string) {
@@ -58,7 +60,10 @@ export class FormService {
       ...row,
       fields: row.fields.filter((f) => f.id !== fieldId),
     }));
-    this._rows.set(newRows);
+    startViewTransition(() =>{
+      this._rows.set(newRows);
+      this.appRef.tick(); // Ensure the view is updated
+    })
   }
 
   addRow() {
@@ -68,7 +73,11 @@ export class FormService {
     };
 
     const row = this._rows();
-    this._rows.set([...row, newRow]);
+
+    startViewTransition(() =>{
+
+      this._rows.set([...row, newRow]);
+    })
   }
 
   deleteRow(nowId: string) {
@@ -77,7 +86,10 @@ export class FormService {
     }
     const rows = this._rows();
     const newRows = rows.filter((row) => row.id !== nowId);
-    this._rows.set(newRows);
+    startViewTransition(() =>{
+      this._rows.set(newRows);
+      this.appRef.tick(); // Ensure the view is updated
+    })
   }
 
   moveField(
@@ -129,7 +141,10 @@ export class FormService {
       ...row,
       fields: row.fields.map(f => f.id === fieldId ? {...f, ...data} :f)
     }));
-    this._rows.set(newRows)
+    startViewTransition(() =>{
+      this._rows.set(newRows);
+      this.appRef.tick(); // Ensure the view is updated
+    })
   }
 
   moveRowUp(rowId: string){
@@ -140,8 +155,11 @@ export class FormService {
       const temp = newRows[index - 1];
       newRows[index - 1] = newRows[index];
       newRows[index] = temp;
-      this._rows.set(newRows);
-    }    
+      startViewTransition(() =>{
+        this._rows.set(newRows);
+        this.appRef.tick(); // Ensure the view is updated
+      })
+    }
   }
   moveRowDown(rowId: string){
     const rows = this._rows();
@@ -150,7 +168,10 @@ export class FormService {
     const temp =  newRows[index + 1]
     newRows[index + 1] = newRows[index];
     newRows[index] = temp;
-    this._rows.set(newRows);
+    startViewTransition(() =>{
+      this._rows.set(newRows);
+      this.appRef.tick(); // Ensure the view is updated
+    })
   }
 
   //Export Related functionality

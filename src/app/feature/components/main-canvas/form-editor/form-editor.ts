@@ -24,6 +24,7 @@ import { MatButtonModule } from '@angular/material/button';
         [cdkDropListData]="row.id"
         (cdkDropListDropped)="onDropInRow($event, row.id)"
         [cdkDropListOrientation]="'mixed'"
+        [style.view-transition-name]="'row-' + row.id"
         class="editor mb-4 relative !ps-10"
       >
         <div class="flex justify-between items-center">
@@ -48,6 +49,8 @@ import { MatButtonModule } from '@angular/material/button';
             [cdkDragData]="field"
             class="flex-1"
             [field]="field"
+            [style.view-transition-name]="'field-' + field.id"
+            [style.view-transition-class]="'field-transition'"
           ></app-form-field>
           }@empty {
           <div class="default-empty">Drag and drop form element here</div>
@@ -73,11 +76,11 @@ export class FormEditor {
 				...fieldType.defaultConfig,
 			};
 			console.log(newField, " newField")
-			
+
 			this.formService.addField(newField, rowId, event.currentIndex);
 			return;
 		}
-		
+
 		const dragData = event.item.data as FormField;
     const previousRowId = event.previousContainer.data as string;
 
