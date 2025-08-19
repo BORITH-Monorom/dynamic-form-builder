@@ -12,20 +12,20 @@ import {DragDropModule} from '@angular/cdk/drag-drop'
     [cdkDragData]="field()"
     (cdkDragStarted)="whileDragging.set(true)"
     (cdkDragEnded)="whileDragging.set(false)"
-    class="button">
-    <div class="button__icon">
+    class="element-button">
+    <div class="element-button__icon">
       <mat-icon class="scale-75">{{field().icon}}</mat-icon>
     </div>
-    <span class="button__label">{{field().label}}</span>
+    <span class="element-button__label">{{field().label}}</span>
     <div *cdkDragPlaceholder></div>
     </button>
     @if(whileDragging()){
     <div 
-    class="button">
-    <div class="button__icon">
+    class="element-button">
+    <div class="element-button__icon">
       <mat-icon class="scale-75">{{field().icon}}</mat-icon>
     </div>
-    <span class="button__label">{{field().label}}</span>
+    <span class="element-button__label">{{field().label}}</span>
     <div *cdkDragPlaceholder></div>
     </div>
     }

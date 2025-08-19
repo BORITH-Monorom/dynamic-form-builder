@@ -16,7 +16,6 @@ import { FormService } from '../../services/form.service';
     FormEditor,
     MatButtonToggleModule,
     FormPreview,
-    FieldPreview, // Added FieldPreview to imports
     MatIconModule,
     MatButtonModule,
     CommonModule // CommonModule is needed for @if
@@ -59,6 +58,7 @@ import { FormService } from '../../services/form.service';
         </div>
       </div>
     </div>
+    
   `,
   styleUrl: './main-canvas.scss',
   animations: [

@@ -5,6 +5,7 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @use './styles.css';
+@use './app/theme.css';
 html {
   @include mat.theme((
     color: (
@@ -20,15 +21,15 @@ body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
   // user's system settings.
-  color-scheme: light;
+  color-scheme: dark;
 
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  background-color: var(--mat-sys-background);
+  color: var(--mat-sys-on-background);
   font: var(--mat-sys-body-medium);
-
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   // Reset the user agent margin.
   margin: 0;
 }
@@ -48,35 +49,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .content{
-  @apply p-4 bg-white rounded-lg  border-gray-200 shadow-sm;
+  @apply p-4 bg-surface-container-lowest rounded-lg  border-outline-variant shadow-sm;
   &__title{
-    @apply text-xl font-medium mb-4
+    @apply text-on-surface text-xl font-medium mb-4
   }
   &__form-field{
-    @apply p-4 bg-white rounded-lg shadow-sm cursor-grab active:cursor-grabbing
+    @apply p-4 bg-surface-container-low rounded-lg shadow-sm  cursor-grab active:cursor-grabbing
   }
 }
 
 
 
-.button{
-  @apply flex items-center gap-3 w-full p-3 border border-gray-200 hover:border-black hover:shadow-md transition-shadow rounded-lg  cursor-pointer;
+.element-button{
+  @apply flex items-center gap-3 w-full p-3 bg-surface-bright border border-outline-variant hover:border-outline hover:shadow-md transition-shadow rounded-lg  cursor-pointer;
   &__icon{
-    @apply rounded-md bg-gray-100 flex items-center justify-center p-1;
+    @apply rounded-md bg-surface-container-high flex items-center justify-center p-1;
   }
   &__label{
-
+    @apply text-on-surface-variant text-base;
   }
 }
 .default-empty{
-  @apply w-full p-4 border border-dashed border-gray-200 rounded-lg 
+  @apply w-full p-4 border-dashed border-2 border-surface-container-highest rounded-lg;
 }
 
 .editor{
-  @apply p-5 bg-white rounded-lg border-2 border-dashed border-gray-200;
+  @apply p-5 bg-surface rounded-lg border-2 border-dashed border-surface-container-highest hover:border-outline-variant;
 }
 
 .cdk-drop-list-dragging:not(.elements-menu){
-  border: 2px solid lightgray !important;
-  background-color: lightgray !important;
+  border: 2px solid var(--color-surface-container-high) !important;
+  background-color: var(--color-surface-container-high) !important;
 }

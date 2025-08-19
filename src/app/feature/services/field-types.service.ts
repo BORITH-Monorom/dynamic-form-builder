@@ -41,6 +41,18 @@ const TEXT_FIELD_DEFINATION: FieldTypeDefinition = {
   ],
 
   component: TextField,
+  generateCode: (field) => `
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>${field.label}</mat-label>
+      <input
+        matInput
+        [type]="${field.inputType || 'text'}"
+        [required]="${field.required}"
+        [placeholder]="${field.placeholder || ''}"
+      />
+    </mat-form-field>
+    `
+  
 };
 const CHECKBOX_FIELD_DEFINITION: FieldTypeDefinition = {
   type: 'checkbox',
@@ -52,13 +64,15 @@ const CHECKBOX_FIELD_DEFINITION: FieldTypeDefinition = {
   },
   settingsConfig: [],
   component: CheckboxField,
+  generateCode: (field) => `
+    <mat-checkbox [required]="${field.required}">${field.label}</mat-checkbox>\n
+  `
 };
 
 const SELECTED_FIELD_DEFINITION: FieldTypeDefinition ={
     type: 'select',
     label: 'DropDown',
     icon: 'arrow_drop_down_circle',
-    component: SelectField,
     defaultConfig: {
         label: 'Select',
         required: false,
@@ -72,7 +86,28 @@ const SELECTED_FIELD_DEFINITION: FieldTypeDefinition ={
         {type: 'text', key: 'label', label:'Label'},
         {type: 'checkbox', key: 'required', label:'Required'},
         {type: 'dynamic-options', key: 'options', label:'Dropdown Options'},
-    ]
+    ],
+    component: SelectField,
+    generateCode: (field) => {
+
+      let code = 
+      `<mat-form-field appearance="outline" class="w-full">\n` +  
+      `<mat-label>${field.label}</mat-label>\n` +
+      `<mat-select [required]="${field.required}">\n`
+      
+      if(field.options){
+        field.options.forEach(option => {
+          code += `<mat-option [value]="${option.value}">${option.label}</mat-option>\n`;
+        });
+      } else {
+        code +=
+          `  <mat-option value="option1">Option 1</mat-option>\n` +
+          `  <mat-option value="option2">Option 2</mat-option>\n` +
+          `  <mat-option value="option3">Option 3</mat-option>\n`;
+      }
+      code += ` </mat-select>\n` +`</mat-form-field>\n `;
+      return code;
+    }
 }
 @Injectable({
   providedIn: 'root',
