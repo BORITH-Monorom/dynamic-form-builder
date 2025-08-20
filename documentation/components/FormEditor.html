@@ -1,0 +1,676 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>dynamic-form-builder documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">dynamic-form-builder documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  FormEditor</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/feature/components/main-canvas/form-editor/form-editor.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-form-editor</code></td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-3">imports</td>
+                <td class="col-md-9">
+                            <code>DragDropModule</code>
+                                <code><a href="../components/FormFieldComponent.html" target="_self" >FormFieldComponent</a></code>
+                            <code>MatIconModule</code>
+                            <code>MatButtonModule</code>
+                            <code>DragDropModule</code>
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">template</td>
+                <td class="col-md-9"><pre class="line-numbers"><code class="language-html">  &lt;div class&#x3D;&quot;p-4&quot;&gt;
+    @for(row of formService.rows();track row.id){
+    &lt;div
+      cdkDropList
+      [cdkDropListData]&#x3D;&quot;row.id&quot;
+      (cdkDropListDropped)&#x3D;&quot;onDropInRow($event, row.id)&quot;
+      [cdkDropListOrientation]&#x3D;&quot;&#x27;mixed&#x27;&quot;
+      [style.view-transition-name]&#x3D;&quot;&#x27;row-&#x27; + row.id&quot;
+      class&#x3D;&quot;editor mb-4 relative !ps-10&quot;
+    &gt;
+      &lt;div class&#x3D;&quot;flex justify-between items-center&quot;&gt;
+        &lt;span class&#x3D;&quot;text-base&quot;&gt;Row&lt;/span&gt;
+        &lt;button mat-icon-button (click)&#x3D;&quot;this.formService.deleteRow(row.id)&quot;&gt;
+          &lt;mat-icon&gt;close&lt;/mat-icon&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+&lt;div class&#x3D;&quot;absolute left-0 flex flex-col top-1/2 -translate-y-1/2&quot;&gt;
+	&lt;button mat-icon-button [disabled]&#x3D;&quot;$first&quot; (click)&#x3D;&quot;formService.moveRowUp(row.id)&quot;&gt;
+		&lt;mat-icon&gt;keyboard_arrow_up&lt;/mat-icon&gt;
+	&lt;/button&gt;
+	&lt;button mat-icon-button [disabled]&#x3D;&quot;$last&quot; (click)&#x3D;&quot;formService.moveRowDown(row.id)&quot;&gt;
+		&lt;mat-icon&gt;keyboard_arrow_down&lt;/mat-icon&gt;
+	&lt;/button&gt;
+&lt;/div&gt;
+      &lt;div class&#x3D;&quot;flex  gap-4 flex-wrap&quot;&gt;
+        @for(field of row.fields; track field){
+        &lt;!-- &lt;div&gt;{{ field.label }}&lt;/div&gt; --&gt;
+        &lt;app-form-field
+          cdkDrag
+          [cdkDragData]&#x3D;&quot;field&quot;
+          class&#x3D;&quot;flex-1&quot;
+          [field]&#x3D;&quot;field&quot;
+          [style.view-transition-name]&#x3D;&quot;&#x27;field-&#x27; + field.id&quot;
+          [style.view-transition-class]&#x3D;&quot;&#x27;field-transition&#x27;&quot;
+        &gt;&lt;/app-form-field&gt;
+        }@empty {
+        &lt;div class&#x3D;&quot;default-empty&quot;&gt;Drag and drop form element here&lt;/div&gt;
+        }
+      &lt;/div&gt;
+    &lt;/div&gt;
+    }
+  &lt;/div&gt;
+</code></pre></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./form-editor.scss</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#formService" >formService</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#onDropInRow" >onDropInRow</a>
+                            </li>
+                            <li>
+                                <a href="#test" >test</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDropInRow"></a>
+                    <span class="name">
+                        <span ><b>onDropInRow</b></span>
+                        <a href="#onDropInRow"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDropInRow(event: CdkDragDrop<string>, rowId: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="70"
+                                    class="link-to-prism">src/app/feature/components/main-canvas/form-editor/form-editor.ts:70</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>event</td>
+                                            <td>
+                                                        <code>CdkDragDrop&lt;string&gt;</code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                        <tr>
+                                                <td>rowId</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="test"></a>
+                    <span class="name">
+                        <span ><b>test</b></span>
+                        <a href="#test"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>test(row: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="66"
+                                    class="link-to-prism">src/app/feature/components/main-canvas/form-editor/form-editor.ts:66</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>row</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="formService"></a>
+                    <span class="name">
+                        <span ><b>formService</b></span>
+                        <a href="#formService"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>inject(FormService)</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">src/app/feature/components/main-canvas/form-editor/form-editor.ts:69</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { CdkDragDrop, DragDropModule } from &#x27;@angular/cdk/drag-drop&#x27;;
+import { Component, inject } from &#x27;@angular/core&#x27;;
+import { FormService } from &#x27;../../../services/form.service&#x27;;
+import { FieldTypeDefinition, FormField } from &#x27;../../../models/field&#x27;;
+import { FormFieldComponent } from &#x27;../form-field/form-field&#x27;;
+import { MatIconModule } from &#x27;@angular/material/icon&#x27;;
+import { MatButtonModule } from &#x27;@angular/material/button&#x27;;
+
+@Component({
+  selector: &#x27;app-form-editor&#x27;,
+  imports: [
+    DragDropModule,
+    FormFieldComponent,
+    MatIconModule,
+    MatButtonModule,
+    DragDropModule,
+  ],
+  // templateUrl: &#x27;./form-editor.html&#x27;,
+  template: &#x60;
+    &lt;div class&#x3D;&quot;p-4&quot;&gt;
+      @for(row of formService.rows();track row.id){
+      &lt;div
+        cdkDropList
+        [cdkDropListData]&#x3D;&quot;row.id&quot;
+        (cdkDropListDropped)&#x3D;&quot;onDropInRow($event, row.id)&quot;
+        [cdkDropListOrientation]&#x3D;&quot;&#x27;mixed&#x27;&quot;
+        [style.view-transition-name]&#x3D;&quot;&#x27;row-&#x27; + row.id&quot;
+        class&#x3D;&quot;editor mb-4 relative !ps-10&quot;
+      &gt;
+        &lt;div class&#x3D;&quot;flex justify-between items-center&quot;&gt;
+          &lt;span class&#x3D;&quot;text-base&quot;&gt;Row&lt;/span&gt;
+          &lt;button mat-icon-button (click)&#x3D;&quot;this.formService.deleteRow(row.id)&quot;&gt;
+            &lt;mat-icon&gt;close&lt;/mat-icon&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+		&lt;div class&#x3D;&quot;absolute left-0 flex flex-col top-1/2 -translate-y-1/2&quot;&gt;
+			&lt;button mat-icon-button [disabled]&#x3D;&quot;$first&quot; (click)&#x3D;&quot;formService.moveRowUp(row.id)&quot;&gt;
+				&lt;mat-icon&gt;keyboard_arrow_up&lt;/mat-icon&gt;
+			&lt;/button&gt;
+			&lt;button mat-icon-button [disabled]&#x3D;&quot;$last&quot; (click)&#x3D;&quot;formService.moveRowDown(row.id)&quot;&gt;
+				&lt;mat-icon&gt;keyboard_arrow_down&lt;/mat-icon&gt;
+			&lt;/button&gt;
+		&lt;/div&gt;
+        &lt;div class&#x3D;&quot;flex  gap-4 flex-wrap&quot;&gt;
+          @for(field of row.fields; track field){
+          &lt;!-- &lt;div&gt;{{ field.label }}&lt;/div&gt; --&gt;
+          &lt;app-form-field
+            cdkDrag
+            [cdkDragData]&#x3D;&quot;field&quot;
+            class&#x3D;&quot;flex-1&quot;
+            [field]&#x3D;&quot;field&quot;
+            [style.view-transition-name]&#x3D;&quot;&#x27;field-&#x27; + field.id&quot;
+            [style.view-transition-class]&#x3D;&quot;&#x27;field-transition&#x27;&quot;
+          &gt;&lt;/app-form-field&gt;
+          }@empty {
+          &lt;div class&#x3D;&quot;default-empty&quot;&gt;Drag and drop form element here&lt;/div&gt;
+          }
+        &lt;/div&gt;
+      &lt;/div&gt;
+      }
+    &lt;/div&gt;
+  &#x60;,
+  styleUrl: &#x27;./form-editor.scss&#x27;,
+})
+export class FormEditor {
+	test(row:any){
+		console.log(row)
+	}
+	formService &#x3D; inject(FormService);
+	onDropInRow(event: CdkDragDrop&lt;string&gt;, rowId: string) {
+		if (event.previousContainer.data &#x3D;&#x3D;&#x3D; &#x27;field-selector&#x27;) {
+			const fieldType &#x3D; event.item.data as FieldTypeDefinition;
+			const newField: FormField &#x3D; {
+				id: crypto.randomUUID(),
+				type: fieldType.type,
+				...fieldType.defaultConfig,
+			};
+			console.log(newField, &quot; newField&quot;)
+
+			this.formService.addField(newField, rowId, event.currentIndex);
+			return;
+		}
+
+		const dragData &#x3D; event.item.data as FormField;
+    const previousRowId &#x3D; event.previousContainer.data as string;
+
+    this.formService.moveField(
+      dragData.id,
+      previousRowId,
+      rowId,
+      event.currentIndex
+    );
+  }
+}
+</code></pre>
+    </div>
+
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>  <div class="p-4">    @for(row of formService.rows();track row.id){    <div      cdkDropList      [cdkDropListData]="row.id"      (cdkDropListDropped)="onDropInRow($event, row.id)"      [cdkDropListOrientation]="\'mixed\'"      [style.view-transition-name]="\'row-\' + row.id"      class="editor mb-4 relative !ps-10"    >      <div class="flex justify-between items-center">        <span class="text-base">Row</span>        <button mat-icon-button (click)="this.formService.deleteRow(row.id)">          <mat-icon>close</mat-icon>        </button>      </div><div class="absolute left-0 flex flex-col top-1/2 -translate-y-1/2">	<button mat-icon-button [disabled]="$first" (click)="formService.moveRowUp(row.id)">		<mat-icon>keyboard_arrow_up</mat-icon>	</button>	<button mat-icon-button [disabled]="$last" (click)="formService.moveRowDown(row.id)">		<mat-icon>keyboard_arrow_down</mat-icon>	</button></div>      <div class="flex  gap-4 flex-wrap">        @for(field of row.fields; track field){        <!-- <div>{{ field.label }}</div> -->        <app-form-field          cdkDrag          [cdkDragData]="field"          class="flex-1"          [field]="field"          [style.view-transition-name]="\'field-\' + field.id"          [style.view-transition-class]="\'field-transition\'"        ></app-form-field>        }@empty {        <div class="default-empty">Drag and drop form element here</div>        }      </div>    </div>    }  </div></div>'
+    var COMPONENTS = [{'name': 'App', 'selector': 'app-root'},{'name': 'CheckboxField', 'selector': 'app-checkbox-field'},{'name': 'DateField', 'selector': 'app-date-field'},{'name': 'DynamicOptions', 'selector': 'app-dynamic-options'},{'name': 'FieldButton', 'selector': 'app-field-button'},{'name': 'FieldPreview', 'selector': 'app-field-preview'},{'name': 'FieldSettings', 'selector': 'app-field-settings'},{'name': 'FormEditor', 'selector': 'app-form-editor'},{'name': 'FormElementMenu', 'selector': 'app-form-element-menu'},{'name': 'FormFieldComponent', 'selector': 'app-form-field'},{'name': 'FormPreview', 'selector': 'app-form-preview'},{'name': 'MainCanvas', 'selector': 'app-main-canvas'},{'name': 'SelectField', 'selector': 'app-select-field'},{'name': 'TextField', 'selector': 'app-text-field'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'FormEditor'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'FormEditor.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
