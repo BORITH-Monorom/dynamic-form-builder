@@ -4,6 +4,7 @@ import { TextField } from '../../shared/field-types/text-field/text-field';
 import { CheckboxField } from '../../shared/field-types/checkbox-field/checkbox-field';
 import { SelectField } from '../../shared/field-types/select-field/select-field';
 import { DateField } from '../../shared/field-types/date-field/date-field';
+import { TextareaField } from '../../shared/field-types/textarea-field/textarea-field';
 const TEXT_FIELD_DEFINATION: FieldTypeDefinition = {
   type: 'text',
   label: 'Text field',
@@ -69,7 +70,6 @@ const CHECKBOX_FIELD_DEFINITION: FieldTypeDefinition = {
     <mat-checkbox [required]="${field.required}">${field.label}</mat-checkbox>\n
   `
 };
-
 const SELECTED_FIELD_DEFINITION: FieldTypeDefinition ={
     type: 'select',
     label: 'DropDown',
@@ -109,8 +109,7 @@ const SELECTED_FIELD_DEFINITION: FieldTypeDefinition ={
       code += ` </mat-select>\n` +`</mat-form-field>\n `;
       return code;
     }
-}
-
+};
 const DATE_FIELD_DEFINITION: FieldTypeDefinition = {
   type: 'date',
   label: 'Date Picker',
@@ -129,7 +128,7 @@ const DATE_FIELD_DEFINITION: FieldTypeDefinition = {
       type: 'checkbox',
       key: 'required',
       label: 'Required'
-    }
+    },
 
   ],
   component: DateField,
@@ -146,7 +145,36 @@ const DATE_FIELD_DEFINITION: FieldTypeDefinition = {
 
 
 
+};
+const TEXTAREA_FIELD_DEFINITION: FieldTypeDefinition ={
+  type: "text",
+  label: "Text Area",
+  icon: "text_snippet",
+  defaultConfig:{
+    label: "Leave a comment",
+  },
+  settingsConfig:[
+    {
+      type: 'text',
+      key: 'label',
+      label: 'Label'
+    },
+    {
+      type: 'text',
+      key: 'placeholder',
+      label: 'Placeholder'
+    },
+    
+  ],
+  component:TextareaField,
+  generateCode: (field) => `
+    <mat-form-field  class="w-full">
+      <mat-label>${field.label}</mat-label>
+      <textarea matInput [placeholder]="${field.placeholder}"></textarea>
+    </mat-form-field>
+  `
 }
+
 @Injectable({
   providedIn: 'root',
 })
@@ -155,7 +183,8 @@ export class FieldTypesService {
     ['text', TEXT_FIELD_DEFINATION],
     ['checkbox', CHECKBOX_FIELD_DEFINITION],
     ['select', SELECTED_FIELD_DEFINITION],
-    ['date', DATE_FIELD_DEFINITION]
+    ['date', DATE_FIELD_DEFINITION],
+    ['textarea', TEXTAREA_FIELD_DEFINITION]
   ]);
   getFieldType(type: string): FieldTypeDefinition | undefined {
     return this.fieldTypes.get(type);

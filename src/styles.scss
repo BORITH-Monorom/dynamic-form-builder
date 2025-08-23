@@ -21,7 +21,7 @@ body {
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
   // user's system settings.
-  color-scheme: dark;
+  color-scheme: light;
 
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
@@ -60,7 +60,7 @@ mat-form-field{
 
 
 .content{
-  @apply p-4 bg-surface-container-lowest rounded-lg  border-outline-variant shadow-sm;
+  @apply p-4 bg-surface-container-low rounded-lg  border-outline-variant shadow-sm;
   &__title{
     @apply text-on-surface text-xl font-medium mb-4
   }
@@ -72,7 +72,7 @@ mat-form-field{
 
 
 .element-button{
-  @apply flex items-center gap-3 w-full p-3 bg-surface-bright border border-outline-variant hover:border-outline hover:shadow-md transition-shadow rounded-lg  cursor-pointer;
+  @apply flex items-center gap-3 w-full p-3 bg-surface border border-outline-variant hover:border-outline hover:shadow-md transition-shadow rounded-lg  cursor-pointer;
   &__icon{
     @apply rounded-md bg-surface-container-high flex items-center justify-center p-1;
   }

@@ -23,8 +23,9 @@ import { DynamicOptions } from "./dynamic-options/dynamic-options";
       @if(formService.selectedField(); as selectedField){
       <h3 class="text-xl font-medium mb-6">Field Properties</h3>
       <div class="flex flex-col gap-4">
-        @for(setting of fieldSettings(); track setting.key){ @switch
-        (setting.type) { @case('text'){
+        @for(setting of fieldSettings(); track setting.key){ 
+        @switch (setting.type) { 
+          @case('text'){
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>{{ setting.label }}</mat-label>
           <input
